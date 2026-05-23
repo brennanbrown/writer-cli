@@ -1,0 +1,14 @@
+# writer config — copy to ~/.config/writer/config or .writerrc in project root
+# Project-local .writerrc takes precedence over the global config.
+
+SSG=hugo
+BUILD_CMD=hugo --minify
+CONTENT_DIR=content
+DEFAULT_SECTION=posts
+DEFAULT_TAGS=                # comma-separated tags pre-filled at the prompt
+BUNDLE_FORMAT=true           # true = slug/index.md, false = slug.md
+FRONTMATTER_FORMAT=yaml      # yaml or toml
+EDITOR=micro
+GIT_COMMIT_MSG=new post:     {slug}
+TIMEZONE=auto                # auto uses system TZ; or explicit e.g. America/Edmonton
+SITE_DIR=                    # optional: absolute path to site root (for SSH/remote use)
