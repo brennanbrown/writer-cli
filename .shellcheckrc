@@ -1,0 +1,9 @@
+# ShellCheck configuration for writer-cli
+# https://www.shellcheck.net/
+
+# Target bash (not sh)
+shell=bash
+
+# SC2034: variable appears unused — expected in lib files that are sourced
+# by writer.sh; the variables are used by sibling modules.
+disable=SC2034
