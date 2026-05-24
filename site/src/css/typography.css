@@ -1,0 +1,101 @@
+/* =========================================================
+   typography.css — headings, body text, links, lists, code
+   ========================================================= */
+
+/* ── Headings ── */
+h1, h2, h3, h4 {
+  color: var(--grey-1);
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: 1rem; }
+h2 { font-size: 1.35rem; margin: 2.5rem 0 0.75rem; padding-bottom: 0.3rem;
+     border-bottom: 2px solid var(--grey-5); }
+h3 { font-size: 1.1rem; margin: 1.75rem 0 0.5rem; color: var(--grey-3); }
+
+/* ── Prose ── */
+p  { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+a  { color: var(--grey-1); text-underline-offset: 3px; }
+a:hover { color: var(--black); }
+
+
+strong { font-weight: 700; color: var(--grey-1); }
+
+ul, ol {
+  padding-left: 1.5em;
+  margin-bottom: 1rem;
+}
+li { margin-bottom: 0.25rem; }
+li:last-child { margin-bottom: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--grey-5);
+  margin: 2.5rem 0;
+}
+
+blockquote {
+  border-left: 3px solid var(--grey-4);
+  padding-left: 1.25rem;
+  color: var(--grey-3);
+  margin: 1.5rem 0;
+}
+blockquote p { margin-bottom: 0; }
+
+/* ── Inline code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--grey-6);
+  border: 1px solid var(--grey-5);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+  color: var(--grey-1);
+}
+
+/* ── Code blocks ── */
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+  /* fallback for blocks without a Prism language class */
+  background: #1e1e2e;
+  color: #cdd6f4;
+  padding: 1.25rem 1.5rem;
+}
+
+pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* ── Tables ── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+th {
+  text-align: left;
+  border-bottom: 2px solid var(--grey-4);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  color: var(--grey-1);
+  font-weight: 700;
+}
+td {
+  border-bottom: 1px solid var(--grey-5);
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  vertical-align: top;
+}
+tr:last-child td { border-bottom: none; }

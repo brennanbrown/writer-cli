@@ -1,0 +1,42 @@
+/* =========================================================
+   tokens.css — design tokens, reset, base
+   ========================================================= */
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Tokens ── */
+:root {
+  --black:       #0d0d0d;
+  --white:       #ffffff;
+  --grey-1:      #1a1a1a;   /* near-black headings */
+  --grey-2:      #333333;   /* body text */
+  --grey-3:      #555555;   /* secondary / nav */
+  --grey-4:      #888888;   /* muted / borders */
+  --grey-5:      #d4d4d4;   /* light borders */
+  --grey-6:      #f2f2f2;   /* code bg */
+  --accent:      #2a2a2a;   /* dark-grey accent (underlines, active) */
+
+  --font-mono:   "JetBrains Mono", "Fira Code", "Cascadia Code",
+                 ui-monospace, "Menlo", "Courier New", monospace;
+  --font-size:   16px;
+  --line:        1.75;
+  --gutter:      clamp(1.25rem, 5vw, 3rem);
+}
+
+/* ── Base ── */
+html {
+  font-size: var(--font-size);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: var(--line);
+  color: var(--grey-2);
+  background: var(--white);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
