@@ -1,0 +1,226 @@
+---
+layout: base.njk
+title: Reference
+description: Complete reference for writer, including all flags, config keys, exit codes, and frontmatter formats.
+---
+
+<h1>Reference</h1>
+<p class="page-intro">
+  Complete listing of every flag, configuration key, frontmatter field, and exit code.
+</p>
+
+<h2>Invocation</h2>
+<pre><code class="language-sh">writer &lt;slug&gt; [options]
+writer --setup</code></pre>
+<p>
+  The <code>&lt;slug&gt;</code> is required for all commands except <code>--setup</code> and <code>--help</code>.
+  It must be lowercase letters, digits, and hyphens only, with no leading or trailing hyphens.
+</p>
+
+<h2>Flags</h2>
+<table>
+  <thead>
+    <tr><th>Flag</th><th>What it does</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>--draft</code></td><td>Sets <code>draft: true</code> in frontmatter. Hugo omits draft posts from production builds.</td></tr>
+    <tr><td><code>--no-push</code></td><td>Builds the site but skips <code>git push</code>.</td></tr>
+    <tr><td><code>--no-build</code></td><td>Skips the build step; only runs <code>git commit</code> and <code>git push</code>.</td></tr>
+    <tr><td><code>--toml</code></td><td>Uses TOML frontmatter (<code>+++</code> delimiters) instead of YAML (<code>---</code>).</td></tr>
+    <tr><td><code>--dry-run</code></td><td>Prints the frontmatter that would be written and exits. No files are touched.</td></tr>
+    <tr><td><code>--section &lt;name&gt;</code></td><td>Puts the post in a different content section for this run (e.g. <code>notes</code>, <code>essays</code>).</td></tr>
+    <tr><td><code>--ssg &lt;name&gt;</code></td><td>Overrides the SSG for this run. Affects which defaults are applied.</td></tr>
+    <tr><td><code>--setup</code></td><td>Runs the interactive setup wizard. No slug required.</td></tr>
+    <tr><td><code>-h</code>, <code>--help</code></td><td>Prints the help message and exits.</td></tr>
+  </tbody>
+</table>
+
+<h2>Config keys</h2>
+<p>
+  Set via <code>writer --setup</code> or by editing <code>~/.config/writer/config</code> directly.
+  Project-local <code>.writerrc</code> overrides the global config.
+</p>
+<table>
+  <thead>
+    <tr><th>Key</th><th>Default</th><th>What it does</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>SSG</code></td>
+      <td><code>hugo</code></td>
+      <td>Which static site generator you use (<code>hugo</code>, <code>eleventy</code>, <code>jekyll</code>).</td>
+    </tr>
+    <tr>
+      <td><code>BUILD_CMD</code></td>
+      <td><code>hugo --minify</code></td>
+      <td>The exact shell command to build your site. Run after every confirmed post.</td>
+    </tr>
+    <tr>
+      <td><code>CONTENT_DIR</code></td>
+      <td><code>content</code></td>
+      <td>Directory that holds your posts, relative to the site root.</td>
+    </tr>
+    <tr>
+      <td><code>DEFAULT_SECTION</code></td>
+      <td><code>posts</code></td>
+      <td>Sub-directory inside <code>CONTENT_DIR</code> for new posts. Override per-run with <code>--section</code>.</td>
+    </tr>
+    <tr>
+      <td><code>DEFAULT_TAGS</code></td>
+      <td><em>(blank)</em></td>
+      <td>Comma-separated tags pre-filled at the tags prompt. Press Enter to accept, or type new tags to replace them.</td>
+    </tr>
+    <tr>
+      <td><code>BUNDLE_FORMAT</code></td>
+      <td><code>true</code></td>
+      <td><code>true</code> → <code>slug/index.md</code> (page bundle). <code>false</code> → <code>slug.md</code> (flat file). Must be exactly <code>true</code> or <code>false</code>.</td>
+    </tr>
+    <tr>
+      <td><code>FRONTMATTER_FORMAT</code></td>
+      <td><code>yaml</code></td>
+      <td><code>yaml</code> for <code>---</code> delimiters. <code>toml</code> for <code>+++</code> delimiters. Override per-run with <code>--toml</code>.</td>
+    </tr>
+    <tr>
+      <td><code>EDITOR</code></td>
+      <td><code>micro</code></td>
+      <td>Terminal editor binary. Any editor that accepts <code>editor +N file.md</code> works.</td>
+    </tr>
+    <tr>
+      <td><code>GIT_COMMIT_MSG</code></td>
+      <td><code>new post: {slug}</code></td>
+      <td>Commit message template. <code>{slug}</code> is replaced with the actual slug at runtime.</td>
+    </tr>
+    <tr>
+      <td><code>TIMEZONE</code></td>
+      <td><code>auto</code></td>
+      <td><code>auto</code> uses the system timezone. Or set an IANA name: <code>America/Winnipeg</code>, <code>Europe/London</code>, <code>UTC</code>.</td>
+    </tr>
+    <tr>
+      <td><code>SITE_DIR</code></td>
+      <td><em>(blank)</em></td>
+      <td>Absolute path to your site root. Writer <code>cd</code>s here before anything else. Leave blank to use the current directory.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Config file format</h2>
+<p>
+  Both <code>~/.config/writer/config</code> and <code>.writerrc</code> use a simple INI-style format:
+  <code>KEY=value</code>, one per line. Comments start with <code>#</code> and can be inline.
+  Blank lines are ignored.
+</p>
+<pre><code class="language-ini"># ~/.config/writer/config
+
+SSG=hugo
+BUILD_CMD=hugo --minify
+CONTENT_DIR=content
+DEFAULT_SECTION=posts
+BUNDLE_FORMAT=true        # true = slug/index.md, false = slug.md
+FRONTMATTER_FORMAT=yaml   # yaml or toml
+EDITOR=micro
+GIT_COMMIT_MSG=new post: {slug}
+TIMEZONE=auto             # auto = system TZ; or e.g. America/Winnipeg
+SITE_DIR=                 # blank = use current directory</code></pre>
+
+<h2>Frontmatter output</h2>
+<h3>YAML (default)</h3>
+<pre><code class="language-yaml">---
+title: "On the Meaning of Home"
+date: 2026-05-23T14:32:00-06:00
+slug: "on-the-meaning-of-home"
+tags:
+  - place
+  - memory
+description: "A meditation on what it means to belong somewhere."
+draft: false
+---</code></pre>
+
+<h3>TOML (<code>--toml</code> or <code>FRONTMATTER_FORMAT=toml</code>)</h3>
+<pre><code class="language-toml">+++
+title = "On the Meaning of Home"
+date = 2026-05-23T14:32:00-06:00
+slug = "on-the-meaning-of-home"
+tags = ["place", "memory"]
+description = "A meditation on what it means to belong somewhere."
+draft = false
++++"</code></pre>
+<p>
+  Fields with no value provided are omitted from the output entirely, not written as empty strings.
+  The <code>description</code> field is only added after you close the editor, once you've had a chance to write it.
+</p>
+
+<h2>Slug validation rules</h2>
+<ul>
+  <li>Lowercase letters (<code>a–z</code>), digits (<code>0–9</code>), and hyphens (<code>-</code>) only</li>
+  <li>Must not start or end with a hyphen</li>
+  <li>No uppercase, underscores, dots, spaces, or other characters</li>
+  <li>Minimum one character</li>
+</ul>
+<p>
+  If the slug is invalid, writer prints a specific error explaining what's wrong and suggests a corrected version.
+</p>
+
+<h2>Exit codes</h2>
+<table>
+  <thead>
+    <tr><th>Code</th><th>Meaning</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>0</code></td><td>Success</td></tr>
+    <tr><td><code>1</code></td><td>Invalid slug, missing argument, missing dependency, or empty title</td></tr>
+    <tr><td><code>2</code></td><td>File already exists and you chose not to overwrite it</td></tr>
+    <tr><td><code>3</code></td><td>Build command failed (<code>BUILD_CMD</code> exited non-zero)</td></tr>
+    <tr><td><code>4</code></td><td>Git step failed (<code>git add</code>, <code>git commit</code>, or <code>git push</code>)</td></tr>
+    <tr><td><code>5</code></td><td>Config file has an unknown key or invalid value</td></tr>
+  </tbody>
+</table>
+
+<h2>Config loading order</h2>
+<ol>
+  <li>Hardcoded defaults (in <code>lib/defaults.sh</code>)</li>
+  <li>Global config: <code>~/.config/writer/config</code></li>
+  <li>Writer <code>cd</code>s to <code>SITE_DIR</code> if set</li>
+  <li>Project-local config: <code>.writerrc</code> in the current directory</li>
+  <li>CLI flags: highest priority, override everything</li>
+</ol>
+
+<h2>Dependencies</h2>
+<table>
+  <thead>
+    <tr><th>Tool</th><th>Required for</th><th>How to get it</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>bash</code></td>
+      <td>Running the script</td>
+      <td>Already on every Mac and Linux. Bash 3.2+ supported (macOS default).</td>
+    </tr>
+    <tr>
+      <td><code>git</code></td>
+      <td>Commit and push</td>
+      <td><code>sudo apt install git</code> / already on macOS</td>
+    </tr>
+    <tr>
+      <td><code>micro</code> (or other editor)</td>
+      <td>Opening the post for writing</td>
+      <td><a href="https://micro-editor.github.io">micro-editor.github.io</a>: <code>curl https://getmic.ro | bash</code></td>
+    </tr>
+    <tr>
+      <td>Hugo (or other SSG)</td>
+      <td>Building the site</td>
+      <td><a href="https://gohugo.io/installation/">gohugo.io/installation</a></td>
+    </tr>
+    <tr>
+      <td><code>date</code></td>
+      <td>Post timestamps</td>
+      <td>GNU date preferred; BSD date (macOS) also supported</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+<p>
+  <a href="/source/" class="btn btn-primary">Source &amp; spec →</a>
+  &nbsp;
+  <a href="/guide/" class="btn btn-secondary">← Guide</a>
+</p>

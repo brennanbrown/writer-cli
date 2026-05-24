@@ -1,0 +1,189 @@
+---
+layout: base.njk
+title: Source
+description: Project layout, module overview, test suite, and links to the full spec for writer-cli.
+---
+
+<h1>Source</h1>
+<p class="page-intro">
+  writer is plain bash, with no build step, no npm, and no compiled binary.
+  Here's how it's structured.
+</p>
+
+<h2>Project layout</h2>
+<pre><code class="language-text">writer-cli/
+├── writer.sh            ← entry point (30 lines)
+├── INSTALL.sh           ← one-command installer
+├── config.example       ← annotated example config
+│
+├── lib/
+│   ├── defaults.sh      ← global variables, colours, err/info/ok helpers
+│   ├── config.sh        ← config file parsing (INI key=value)
+│   ├── args.sh          ← CLI flag parsing and --help text
+│   ├── setup.sh         ← --setup onboarding wizard
+│   ├── validate.sh      ← slug validation and ISO 8601 date generation
+│   ├── frontmatter.sh   ← YAML and TOML frontmatter builders
+│   ├── deps.sh          ← dependency pre-flight checks
+│   └── post.sh          ← main post-creation workflow
+│
+└── tests/
+    ├── test_writer.sh       ← test suite runner
+    └── lib/
+        ├── helpers.sh          ← isolated HOME, run_writer, assert helpers
+        ├── test_args.sh        ← argument parsing and slug validation
+        ├── test_frontmatter.sh ← YAML/TOML content, flags, date, cursor
+        ├── test_config.sh      ← config file parsing
+        ├── test_deps.sh        ← dependency pre-flight
+        ├── test_exit.sh        ← exit codes and bundle format
+        └── test_setup.sh       ← onboarding wizard</code></pre>
+
+<h2>Entry point</h2>
+<p>
+  <code>writer.sh</code> itself is 30 lines. It sets <code>set -euo pipefail</code>, resolves its own
+  directory with <code>${BASH_SOURCE[0]}</code> (so it works from any working directory, PATH install,
+  or symlink), sources all eight <code>lib/</code> modules in order, then calls <code>main "$@"</code>.
+</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+
+WRITER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+source "${WRITER_DIR}/lib/defaults.sh"
+source "${WRITER_DIR}/lib/config.sh"
+source "${WRITER_DIR}/lib/args.sh"
+source "${WRITER_DIR}/lib/setup.sh"
+source "${WRITER_DIR}/lib/validate.sh"
+source "${WRITER_DIR}/lib/frontmatter.sh"
+source "${WRITER_DIR}/lib/deps.sh"
+source "${WRITER_DIR}/lib/post.sh"
+
+main "$@"</code></pre>
+
+<h2>Modules</h2>
+
+<h3>lib/defaults.sh</h3>
+<p>
+  Declares all global variables with their hardcoded defaults, all CLI flag variables
+  (<code>FLAG_DRAFT</code>, <code>FLAG_DRY_RUN</code>, etc.), colour escape sequences,
+  and the three output helpers: <code>err()</code>, <code>info()</code>, <code>ok()</code>.
+</p>
+
+<h3>lib/config.sh</h3>
+<p>
+  <code>_parse_config_file()</code> reads an INI-style file line by line, strips inline comments,
+  trims whitespace, and assigns known keys to global variables. Unknown keys exit with code 5.
+  <code>load_global_config()</code> and <code>load_local_config()</code> call it for the right paths.
+</p>
+
+<h3>lib/args.sh</h3>
+<p>
+  <code>usage()</code> prints the help text. <code>parse_args()</code> processes <code>"$@"</code>
+  in a <code>while/case</code> loop, setting flags and the <code>SLUG</code> global.
+  <code>--setup</code> is the only flag that is valid without a slug argument.
+</p>
+
+<h3>lib/setup.sh</h3>
+<p>
+  <code>_prompt()</code> is a helper that prints a labelled prompt with the current value shown
+  in green, reads into the global <code>REPLY_VAL</code>, and keeps the current value if Enter
+  is pressed. <code>run_onboarding()</code> walks through all ten config keys, validates
+  <code>BUNDLE_FORMAT</code> and <code>FRONTMATTER_FORMAT</code> in a re-prompt loop, and writes
+  the config file with a date-stamped header.
+</p>
+
+<h3>lib/validate.sh</h3>
+<p>
+  <code>validate_slug()</code> matches against <code>^[a-z0-9][a-z0-9-]*[a-z0-9]$|^[a-z0-9]$</code>
+  and prints specific diagnostic messages for uppercase, invalid characters, and leading/trailing hyphens.
+  <code>get_iso_date()</code> generates an ISO 8601 timestamp with timezone offset, with a fallback for
+  BSD <code>date</code> (macOS) when GNU <code>date --iso-8601=seconds</code> is unavailable.
+</p>
+
+<h3>lib/frontmatter.sh</h3>
+<p>
+  <code>build_yaml_frontmatter()</code> and <code>build_toml_frontmatter()</code> take title, slug,
+  date, tags, description, and draft as arguments and return the complete frontmatter block.
+  Tags are split on commas, each trimmed and empty entries dropped.
+  <code>count_frontmatter_lines()</code> counts lines in the generated block, used to position
+  the editor cursor on the first blank line below the closing delimiter.
+</p>
+
+<h3>lib/deps.sh</h3>
+<p>
+  <code>check_deps()</code> verifies that the editor binary, the first word of <code>BUILD_CMD</code>,
+  and <code>git</code> are all on <code>PATH</code>, and that the working directory is inside
+  a git repo. Skips all checks when <code>--dry-run</code> is set.
+  Collects all missing deps before exiting so every problem is reported in one pass.
+</p>
+
+<h3>lib/post.sh</h3>
+<p>
+  Contains <code>main()</code>, the orchestrator. Calls <code>parse_args</code>, handles the
+  <code>--setup</code> and first-run paths, loads config in the correct layered order,
+  applies CLI overrides, then runs the interactive post-creation flow: overwrite check,
+  title/tags prompts, frontmatter generation, file creation, editor launch, description prompt,
+  frontmatter rewrite (if a description was given), and the build/git sequence.
+</p>
+
+<h2>Test suite</h2>
+<p>
+  <code>tests/test_writer.sh</code> is a thin runner that sources seven focused modules from
+  <code>tests/lib/</code>, covering 104 assertions across argument parsing, slug validation,
+  YAML/TOML frontmatter, all flags, tags edge cases, date format, config file parsing,
+  dependency pre-flight, exit codes, bundle format, cursor line calculation, and the full
+  onboarding wizard flow, mirroring the same modular structure as the main <code>lib/</code>.
+</p>
+<pre><code class="language-sh"># Run from the repo root
+bash tests/test_writer.sh</code></pre>
+<p>
+  The harness creates an isolated <code>$HOME</code> via <code>mktemp -d</code> for each test run,
+  so the real <code>~/.config/writer/config</code> is never touched.
+  All tests use <code>--dry-run</code> or isolated temp directories. No real editor, build, or git operations run.
+</p>
+
+<h2>Design notes</h2>
+
+<h3>Why bash?</h3>
+<p>
+  The target environment is a remote Linux server with a minimal install, often just bash,
+  git, and whatever the user put there. Bash is always present; Python may not be.
+  It felt wrong to require Node just to publish a blog post.
+</p>
+
+<h3>Bash 3.2 compatibility</h3>
+<p>
+  macOS ships bash 3.2 (GPL2, never updated). Writer avoids all bash 4+ features:
+  no <code>${var,,}</code> lowercasing (uses <code>tr '[:upper:]' '[:lower:]'</code> instead),
+  no associative arrays, no <code>mapfile</code>/<code>readarray</code>.
+</p>
+
+<h3><code>set -euo pipefail</code> discipline</h3>
+<p>
+  Every conditional that might return non-zero uses <code>if/then</code>, never
+  <code>[[ condition ]] && cmd</code>, which silently exits under <code>set -e</code>
+  when the condition is false. <code>read</code> calls are all followed by <code>|| true</code>
+  to handle EOF on non-interactive stdin gracefully.
+</p>
+
+<h3>Sourced modules, not subshells</h3>
+<p>
+  All <code>lib/</code> files are <code>source</code>d into the main shell, not executed as
+  subshells. This means they share global state (all the config variables, flags, <code>SLUG</code>)
+  without needing to pass arguments or use <code>export</code>.
+  Each lib file has no shebang and no <code>set -e</code>, it inherits the caller's environment.
+</p>
+
+<hr>
+<h2>Links</h2>
+<ul>
+  <li><a href="https://github.com/brennanbrown/writer-cli">GitHub repository</a></li>
+  <li><a href="https://github.com/brennanbrown/writer-cli/blob/main/INSTALL.sh">Installer source (INSTALL.sh)</a></li>
+  <li><a href="https://github.com/brennanbrown/writer-cli/blob/main/config.example">Annotated config example</a></li>
+</ul>
+
+<hr>
+<p>
+  <a href="/reference/" class="btn btn-secondary">← Reference</a>
+  &nbsp;
+  <a href="https://github.com/brennanbrown/writer-cli" class="btn btn-primary">GitHub ↗</a>
+</p>
