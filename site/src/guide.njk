@@ -1,0 +1,175 @@
+---
+layout: base.njk
+title: Guide
+description: Full guide to using writer, including SSH workflow, editors, drafts, and project-local config.
+---
+
+<h1>Guide</h1>
+<p class="page-intro">
+  Everything you need to go from a fresh install to publishing posts regularly,
+  including the SSH remote workflow.
+</p>
+
+<h2>The slug</h2>
+<p>
+  When you run <code>writer my-post</code>, the part after <code>writer</code> is the <strong>slug</strong>.
+  It becomes the URL path for your post (<code>yourdomain.com/posts/my-post/</code>),
+  so keep it clean:
+</p>
+<ul>
+  <li><strong>All lowercase</strong>: <code>my-post</code>, not <code>My-Post</code></li>
+  <li><strong>Hyphens for spaces</strong>: <code>on-the-road</code>, not <code>on the road</code></li>
+  <li><strong>Letters, numbers, hyphens only</strong>: no underscores, dots, or special characters</li>
+</ul>
+<pre><code class="language-sh">writer on-the-meaning-of-home
+writer coffee-and-clarity
+writer 2026-reflections</code></pre>
+
+<h2>The full workflow</h2>
+<ol class="steps">
+  <li><strong>Run <code>writer my-slug</code></strong>: writer checks your config and dependencies, then asks for a title.</li>
+  <li><strong>Title</strong> (required): type your post title and press Enter. If you leave it blank, writer asks once more, then exits.</li>
+  <li><strong>Tags</strong> (optional): comma-separated. Press Enter to skip. Leading/trailing whitespace is trimmed. Empty entries (e.g. double commas) are silently dropped.</li>
+  <li><strong>Editor</strong>: your editor launches with the cursor on the first blank line below the frontmatter. Write your post. Save and close.</li>
+  <li><strong>Description</strong> (optional): a one-line summary added to frontmatter. Press Enter to skip.</li>
+  <li><strong>Confirm</strong>: press Enter or Y to build and push. Press N to save the file without publishing.</li>
+</ol>
+
+<h2>Saving a draft</h2>
+<pre><code class="language-sh">writer my-post --draft</code></pre>
+<p>
+  Sets <code>draft: true</code> in frontmatter. Hugo skips draft posts in production builds.
+  Useful for posts you want to write now and publish later.
+</p>
+
+<h2>Building without pushing</h2>
+<pre><code class="language-sh">writer my-post --no-push    # build the site, but skip git push
+writer my-post --no-build   # skip build; only commit and push the file</code></pre>
+
+<h2>Previewing frontmatter (dry run)</h2>
+<pre><code class="language-sh">writer my-post --dry-run</code></pre>
+<p>
+  Prints the frontmatter that <em>would</em> be written, then exits.
+  No files are created or modified. Useful for checking the output format.
+</p>
+<pre><code class="language-yaml">---
+title: "My Post"
+date: 2026-05-23T07:00:00-06:00
+slug: "my-post"
+draft: false
+---</code></pre>
+
+<h2>Choosing an editor</h2>
+<p>
+  The default editor is <a href="https://micro-editor.github.io">micro</a>:
+  a small terminal editor that behaves like a normal editor:
+  <strong>Ctrl+S</strong> saves, <strong>Ctrl+Q</strong> quits.
+  No modes, no configuration needed, Markdown syntax highlighting built in.
+</p>
+<p>
+  To install micro on Linux:
+</p>
+<pre><code class="language-sh">curl https://getmic.ro | bash
+mv micro ~/.local/bin/micro</code></pre>
+<p>
+  To switch to a different editor, run <code>writer --setup</code> and update the <code>EDITOR</code> prompt,
+  or edit <code>~/.config/writer/config</code> directly:
+</p>
+<pre><code class="language-ini">EDITOR=nano    # or vim, nvim, hx, emacs — any terminal editor</code></pre>
+
+<h2>Using writer over SSH</h2>
+<p>
+  The intended use case for writer is a remote server:
+  you SSH in, run one command, write, and the post is live.
+  No Hugo, git, or editor needed on your laptop.
+</p>
+<pre><code class="language-sh">ssh you@yourserver.com
+writer my-post</code></pre>
+<p>
+  Set <code>SITE_DIR</code> in your config (via <code>writer --setup</code>) to point to your
+  Hugo project directory on the server. Writer will <code>cd</code> there automatically before
+  doing anything, so you don't need to be in the right directory when you SSH in.
+</p>
+<pre><code class="language-ini">SITE_DIR=/var/www/your-site</code></pre>
+
+<h3>One-command access from your laptop</h3>
+<pre><code class="language-sh"># ~/.bashrc or ~/.zshrc on your laptop
+alias blog='ssh you@yourserver.com'</code></pre>
+<p>
+  Then <code>blog</code> drops you straight into the server and you are one <code>writer</code>
+  command away from a published post.
+</p>
+
+<h3>Unreliable connections (mobile, etc.)</h3>
+<p>
+  Run writer inside <a href="https://github.com/tmux/tmux">tmux</a> so a dropped connection doesn't interrupt a write in progress:
+</p>
+<pre><code class="language-sh">tmux new-session -A -s write
+writer my-post</code></pre>
+<p>
+  If you disconnect, <code>tmux attach</code> on reconnect puts you back where you were.
+</p>
+
+<h3>Setting up git auth on the server</h3>
+<p>
+  The server needs to push to your git remote without a password prompt.
+  The recommended way is an SSH deploy key:
+</p>
+<pre><code class="language-sh"># On the server — generate a deploy key
+ssh-keygen -t ed25519 -C "yourserver-writer" -f ~/.ssh/writer_deploy
+
+# Print the public key and add it to GitHub/Codeberg with write access
+cat ~/.ssh/writer_deploy.pub</code></pre>
+<pre><code class="language-sh"># ~/.ssh/config on the server
+Host github.com
+    IdentityFile ~/.ssh/writer_deploy
+    IdentitiesOnly yes</code></pre>
+<pre><code class="language-sh"># Test it
+ssh -T git@github.com</code></pre>
+
+<h3>Full server architecture</h3>
+<pre><code class="language-text">[Your laptop]
+     │
+     │  ssh you@yourserver.com
+     ▼
+[Remote server]
+  ├── /var/www/your-site/        ← Hugo project (git repo)
+  ├── ~/.local/bin/writer        ← writer script
+  ├── ~/.config/writer/config    ← writer config
+  └── micro, hugo, git           ← all dependencies live here
+          │
+          │  git push
+          ▼
+[GitHub / Codeberg / Gitea]
+          │
+          │  webhook or CI/CD (optional)
+          ▼
+     [Live site]</code></pre>
+
+<h2>Project-local config (<code>.writerrc</code>)</h2>
+<p>
+  Place a <code>.writerrc</code> file in the root of your Hugo site to override global settings
+  for that project only. Settings here take precedence over <code>~/.config/writer/config</code>.
+</p>
+<pre><code class="language-ini"># .writerrc — project-local overrides
+DEFAULT_SECTION=notes
+FRONTMATTER_FORMAT=toml
+GIT_COMMIT_MSG=post: {slug}</code></pre>
+<p>
+  Useful if you manage more than one blog, or want a specific section or frontmatter format
+  for one project without changing your global defaults.
+</p>
+
+<h2>Re-running setup</h2>
+<pre><code class="language-sh">writer --setup</code></pre>
+<p>
+  Every setting is shown with its current saved value. Press Enter to keep it, or type a new value.
+  Your config is saved when you finish the wizard.
+</p>
+
+<hr>
+<p>
+  <a href="/reference/" class="btn btn-primary">Reference →</a>
+  &nbsp;
+  <a href="/" class="btn btn-secondary">← Home</a>
+</p>

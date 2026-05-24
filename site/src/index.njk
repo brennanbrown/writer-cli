@@ -1,0 +1,191 @@
+---
+layout: base.njk
+title: writer
+description: A CLI tool for static site bloggers who want to open a terminal, write something, and have it live, without any fuss.
+---
+
+<section class="hero">
+  <div class="index-bg" aria-hidden="true">
+    <div class="bg-shape bg-s1"></div>
+    <div class="bg-shape bg-s2"></div>
+    <div class="bg-shape bg-s3"></div>
+    <div class="bg-shape bg-s4"></div>
+    <div class="bg-shape bg-s5"></div>
+    <div class="bg-shape bg-s6"></div>
+    <div class="bg-shape bg-s7"></div>
+    <div class="bg-shape bg-s8"></div>
+    <div class="bg-shape bg-s9"></div>
+    <div class="bg-shape bg-s10"></div>
+    <div class="bg-shape bg-s11"></div>
+    <div class="bg-shape bg-s12"></div>
+    <div class="bg-shape bg-s13"></div>
+    <div class="bg-shape bg-s14"></div>
+    <div class="bg-shape bg-s15"></div>
+  </div>
+  <p class="hero-eyebrow">writer-cli</p>
+  <h1>Write from your terminal.<br>Publish with one command.</h1>
+  <p class="hero-sub">
+    A command-line tool for bloggers who have a static site and just want to open a terminal, write something, and have it live on the Internet.
+  </p>
+
+  <div class="hero-install">
+    <div class="copy-wrap">
+      <span class="install-box" id="install-cmd">curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh | bash</span>
+      <button class="copy-btn" onclick="
+        navigator.clipboard.writeText(document.getElementById('install-cmd').textContent);
+        this.textContent='copied!';
+        this.classList.add('copied');
+        setTimeout(()=>{this.textContent='copy';this.classList.remove('copied');},2000);
+      ">copy</button>
+    </div>
+  </div>
+  <p class="hero-note">
+    Installs to <code>~/.local/bin/</code>.<br>
+    Feel free to <a href="https://github.com/brennanbrown/writer-cli/blob/main/INSTALL.sh">read the installer source</a> before running. <br>
+    It's 120 lines of plain bash!
+  </p>
+</section>
+
+<hr>
+
+<section>
+  <h2>What it looks like</h2>
+  <p>After you type the command, you'll be prompted:</p>
+
+  <div class="terminal" role="img" aria-label="Terminal session showing writer in use">
+<pre><span class="term-prompt">$ </span><span class="term-cmd">writer my-new-post</span>
+
+
+Title: My New Post
+
+Tags (comma-separated): life, coffee
+
+
+<span class="term-arrow">→</span> Created: content/posts/my-new-post/index.md
+<span class="term-arrow">→</span> Opening in micro...
+
+
+<span class="term-dim">[you write your post, then Ctrl+S to save and Ctrl+Q to quit]</span>
+
+
+Summary: A short piece about mornings.
+
+Confirm build and push? [Y/n]:
+
+
+<span class="term-arrow">→</span> Building site... done (1.8s)
+<span class="term-arrow">→</span> git add .
+<span class="term-arrow">→</span> git commit -m "new post: my-new-post"
+<span class="term-arrow">→</span> git push...
+
+
+<span class="term-ok">✓ Published: my-new-post</span></pre>
+  </div>
+</section>
+
+<hr>
+
+<section>
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li>Run <code>writer my-slug</code>: writer asks for your post title and optional tags.</li>
+    <li>Your editor opens with the cursor on the first blank line below the frontmatter. Write your post. Save and close.</li>
+    <li>You're asked for an optional one-line description/summary.</li>
+    <li>Press Enter to confirm. Writer builds the site and pushes to git.</li>
+  </ol>
+  <p>
+    At the confirm step, pressing <strong>N</strong> saves your post file without building or pushing.
+    You can come back and publish later.
+  </p>
+  <p><a href="/guide/">Full guide →</a></p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Why?</h2>
+  <div class="features">
+    <div class="feature">
+      <p class="feature-label">Made for SSH</p>
+      <p>Run writer on a remote server. Hugo, git, and your editor all live there, and you just connect and write.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-label">A familiar default editor</p>
+      <p>The default editor is <a href="https://micro-editor.github.io">micro</a>. Ctrl+S saves, Ctrl+Q quits, just like you'd expect.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-label">Guided setup wizard</p>
+      <p>Run <code>writer --setup</code> and answer the prompts. Each one comes with a sensible default, so you can press Enter right through.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-label">Small and auditable</p>
+      <p>700 lines of bash across 8 files, with no npm, no Python, and no external dependencies.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-label">Hugo, Eleventy, Jekyll</p>
+      <p>Works with any SSG that has a shell build command. YAML or TOML frontmatter.</p>
+    </div>
+    <div class="feature">
+      <p class="feature-label">Drafts and sections</p>
+      <p><code>--draft</code> keeps posts out of the build. <code>--section</code> puts them in a different folder. <code>--no-push</code> builds without pushing.</p>
+    </div>
+  </div>
+</section>
+
+<hr>
+
+<section>
+  <h2>Install &amp; Setup</h2>
+
+  <h3>1. Install</h3>
+  <pre><code class="language-sh">curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh | bash</code></pre>
+  <p>Or clone and symlink manually:</p>
+  <pre><code class="language-sh">git clone https://github.com/brennanbrown/writer-cli
+ln -s "$PWD/writer-cli/writer.sh" ~/.local/bin/writer
+chmod +x ~/.local/bin/writer</code></pre>
+
+  <h3>2. Run setup</h3>
+  <pre><code class="language-sh">writer --setup</code></pre>
+  <p>
+    The wizard asks ten questions: your SSG, build command, content directory, editor, timezone, etc.
+    Each prompt shows the current default. Press Enter to keep it.
+    You only need to do this once.
+  </p>
+  <p>
+    If you skip setup and run <code>writer</code> directly, the wizard starts automatically on first run.
+  </p>
+
+  <h3>3. Write</h3>
+  <pre><code class="language-sh">writer on-the-meaning-of-home</code></pre>
+  <p>
+    The <strong>slug</strong>, the part after <code>writer</code>, becomes the URL path for your post.
+    Keep it lowercase, use hyphens for spaces, letters and numbers only.
+  </p>
+
+  <p style="margin-top:1.5rem">
+    <a href="/guide/" class="btn btn-primary">Full guide</a>
+    &nbsp;
+    <a href="/reference/" class="btn btn-secondary">Reference</a>
+  </p>
+</section>
+
+<hr>
+
+<section class="about-section">
+  <h2>About</h2>
+  <p>
+    Hi, I'm <a href="https://brennan.day">Brennan</a>! I'm a Queer Métis author and FOSS web developer based in
+    Mohkínstsis, Treaty 7 territory, and the founder of <a href="https://berryhouse.ca">🍓 Berry House</a>.
+    I write personal essays, cultural criticism, and about why the Internet is worth fighting for.
+    IndieWeb forever!
+  </p>
+  <p>
+    I built <code>writer-cli</code> inspired by the <a href="https://github.com/modgethanc/ttbp">TTBP</a>
+    (tilde.town feels engine), a blogging tool from the tildeverse that makes writing and publishing feel
+    effortless. I wanted something like that for my own static site. If it's useful to you too, I'd love it
+    if you considered supporting my work.
+  </p>
+  <p>
+    <a href="https://brennan.day/support" class="btn btn-primary">Support Brennan ↗</a>
+  </p>
+</section>
