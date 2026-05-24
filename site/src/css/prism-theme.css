@@ -1,0 +1,91 @@
+/* Prism.js syntax theme — dark bg, colourful tokens */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #cdd6f4;
+  background: #1e1e2e;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+  tab-size: 2;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  padding: 1.25rem 1.5rem;
+  overflow: auto;
+  border-radius: 6px;
+}
+
+:not(pre) > code[class*="language-"] {
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  white-space: normal;
+}
+
+/* Tokens */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata            { color: #6c7086; font-style: italic; }
+
+.token.punctuation      { color: #cdd6f4; }
+
+.token.namespace        { opacity: 0.7; }
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted          { color: #f38ba8; }   /* red — values/numbers */
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted         { color: #a6e3a1; }   /* green — strings */
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string    { color: #89dceb; }   /* sky — operators */
+
+.token.atrule,
+.token.attr-value,
+.token.keyword          { color: #89b4fa; }   /* blue — keywords */
+
+.token.function,
+.token.class-name       { color: #cba6f7; }   /* mauve — functions */
+
+.token.regex,
+.token.important,
+.token.variable         { color: #fab387; }   /* peach — variables */
+
+.token.important,
+.token.bold             { font-weight: 700; }
+.token.italic           { font-style: italic; }
+.token.entity           { cursor: help; }
+
+/* Shell-specific */
+.language-sh .token.function { color: #89b4fa; }
+.language-bash .token.function { color: #89b4fa; }
+
+/* INI / config files */
+.language-ini .token.attr-name   { color: #89dceb; }
+.language-ini .token.attr-value  { color: #a6e3a1; }
+
+/* Line numbers (optional, if enabled) */
+.line-numbers .line-numbers-rows {
+  border-right: 1px solid #313244;
+}
+.line-numbers-rows > span::before {
+  color: #45475a;
+}

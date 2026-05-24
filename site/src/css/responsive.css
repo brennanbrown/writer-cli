@@ -1,0 +1,15 @@
+/* =========================================================
+   responsive.css — breakpoint overrides
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .features { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 540px) {
+  .features { grid-template-columns: 1fr; }
+  .hero-install { flex-direction: column; align-items: flex-start; }
+  .install-box  { font-size: 0.78rem; word-break: break-all; }
+  table { font-size: 0.8rem; }
+}
+
