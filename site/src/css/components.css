@@ -1,0 +1,136 @@
+/* =========================================================
+   components.css — buttons, terminal, steps, features,
+                    copy button, install box
+   ========================================================= */
+
+/* ── Buttons ── */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.6rem 1.1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-primary {
+  background: var(--grey-1);
+  color: var(--white);
+}
+.btn-primary:hover { background: var(--grey-3); color: var(--white); }
+.btn-secondary {
+  border: 1px solid var(--grey-4);
+  color: var(--grey-2);
+}
+.btn-secondary:hover { background: var(--grey-6); border-color: var(--grey-2); color: var(--grey-1); }
+
+/* ── Install box ── */
+.install-box {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  background: var(--grey-1);
+  color: #e8e8e8;
+  padding: 0.7rem 1.1rem;
+  border-radius: 6px;
+  user-select: all;
+  cursor: text;
+  letter-spacing: 0;
+}
+
+/* ── Copy button ── */
+.copy-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.copy-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: var(--grey-5);
+  color: var(--grey-1);
+  border: 1px solid var(--grey-4);
+  border-radius: 4px;
+  padding: 0.4rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.copy-btn:hover { background: var(--grey-4); color: var(--grey-1); }
+.copy-btn.copied { background: #a6e3a1; border-color: #a6e3a1; color: #1a1a1a; }
+
+/* ── Terminal demo block ── */
+.terminal {
+  background: #1a1a1a;
+  color: #d4d4d4;
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  overflow-x: auto;
+  margin: 2rem 0;
+  max-width: 72ch;
+  tab-size: 2;
+}
+.term-prompt { color: #888; }
+.term-cmd    { color: #e8e8e8; font-weight: 700; }
+.term-arrow  { color: #6a9fb5; }
+.term-ok     { color: #a3c97a; font-weight: 700; }
+.term-dim    { color: #555; font-style: italic; }
+
+/* ── Workflow steps ── */
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+  counter-reset: step;
+}
+.steps li {
+  counter-increment: step;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+.steps li::before {
+  content: counter(step);
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--grey-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--grey-3);
+  margin-top: 0.1rem;
+}
+
+/* ── Feature grid ── */
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.feature {
+  border: 1px solid var(--grey-5);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+.feature-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--grey-4);
+  margin-bottom: 0.4rem;
+}
+.feature p { font-size: 0.9rem; color: var(--grey-3); max-width: none; margin: 0; }

@@ -1,0 +1,19 @@
+/* =========================================================
+   style.css — writer site styles
+   Design: white background, black monospace, dark-grey accents
+
+   Modules (load order matters):
+     tokens.css      — reset, CSS custom properties, base html/body
+     typography.css  — headings, prose, links, code, tables
+     layout.css      — nav, main, footer, page-intro, callout
+     components.css  — buttons, terminal, steps, features, copy button
+     hero.css        — homepage hero and background shapes
+     responsive.css  — breakpoint overrides, prefers-reduced-motion
+   ========================================================= */
+
+@import url("tokens.css");
+@import url("typography.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("hero.css");
+@import url("responsive.css");

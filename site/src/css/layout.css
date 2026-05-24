@@ -1,0 +1,108 @@
+/* =========================================================
+   layout.css — nav, main, footer, page-intro, callout
+   ========================================================= */
+
+/* ── Nav ── */
+.site-header {
+  border-bottom: 1px solid var(--grey-5);
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.875rem var(--gutter);
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--grey-1);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.nav-logo:hover { color: var(--black); }
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.nav-links li { margin: 0; }
+
+.nav-links a {
+  font-size: 0.875rem;
+  color: var(--grey-3);
+  text-decoration: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+}
+.nav-links a:hover { color: var(--grey-1); background: var(--grey-6); }
+.nav-links a.active { color: var(--grey-1); font-weight: 700; }
+
+.nav-github {
+  margin-left: auto;
+  color: var(--grey-3) !important;
+  font-size: 0.8rem !important;
+}
+.nav-github:hover { color: var(--grey-1) !important; }
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter);
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--grey-5);
+  padding: 1.5rem var(--gutter);
+  font-size: 0.8rem;
+  color: var(--grey-4);
+  text-align: center;
+}
+.site-footer a { color: var(--grey-4); }
+.site-footer a:hover { color: var(--grey-2); }
+
+/* ── Section intro text ── */
+.page-intro {
+  font-size: 1.05rem;
+  color: var(--grey-3);
+  max-width: 60ch;
+  margin-bottom: 2.5rem;
+}
+
+/* ── Callout box ── */
+.callout {
+  border: 1px solid var(--grey-5);
+  border-left: 4px solid var(--grey-3);
+  border-radius: 0 6px 6px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--grey-2);
+}
+.callout p { max-width: none; margin-bottom: 0.5rem; }
+.callout p:last-child { margin-bottom: 0; }
+.callout code { font-size: 0.85em; }
