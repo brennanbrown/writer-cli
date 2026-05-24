@@ -1,0 +1,13 @@
+{
+  "name": "writer-cli-site",
+  "version": "1.0.0",
+  "description": "Documentation site for writer-cli",
+  "scripts": {
+    "start": "eleventy --serve --port=8081",
+    "build": "eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0"
+  }
+}
