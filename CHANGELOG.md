@@ -7,6 +7,22 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.1.0] - 2026-05-25
+
+### Fixed
+- `INSTALL.sh` and `lib/setup.sh`: all `read` calls now use `</dev/tty` so the setup wizard works correctly when invoked via `curl | bash` (previously, stdin was the pipe and printf output was consumed as user input, corrupting the saved config)
+- `INSTALL.sh`: reload hint at the end of install now shows the correct shell-specific command (`source ~/.bash_profile && source ~/.bashrc` for bash, `source ~/.zprofile && source ~/.zshrc` for zsh)
+- `lib/setup.sh`: whitespace is trimmed from `read` input in the `BUNDLE_FORMAT` and `FRONTMATTER_FORMAT` validation loops, preventing spurious re-prompt cycles when the user presses space+Enter
+- `lib/setup.sh`: `BUNDLE_FORMAT` and `FRONTMATTER_FORMAT` now default correctly on first run when no config exists
+- `INSTALL.sh`: `export PATH` line now runs before the smoke test, ensuring `writer` is available in the current install session
+- `lib/deps.sh`: git repo detection relaxed to handle bare repos and non-standard `.git` configurations
+- `lib/post.sh`: title prompt clarified
+- `writer.sh`: symlink resolved at startup so `lib/` modules are found correctly when `writer` is invoked via `~/.local/bin/writer` symlink
+
+[1.1.0]: https://github.com/brennanbrown/writer-cli/compare/v1.0.0...v1.1.0
+
+---
+
 ## [1.0.0] - 2026-05-23
 
 ### Added
