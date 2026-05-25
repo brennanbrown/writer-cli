@@ -26,14 +26,14 @@ check_deps() {
         fi
     fi
 
-    if [[ "$FLAG_NO_PUSH" == "false" ]]; then
+    if [[ "$FLAG_NO_PUSH" == "false" || "$FLAG_NO_BUILD" == "false" ]]; then
         if ! command -v git >/dev/null 2>&1; then
             err "Required tool not found: git"
             missing=1
-        else
-            # Verify we are inside a git repo
+        elif [[ "$FLAG_NO_PUSH" == "false" ]]; then
+            # Only require a git repo when we actually intend to commit/push
             if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-                err "Not inside a git repository. Run writer from your site root or set SITE_DIR."
+                err "Not inside a git repository. Run writer from your site root, set SITE_DIR, or use --no-push."
                 missing=1
             fi
         fi

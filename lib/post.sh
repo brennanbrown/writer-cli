@@ -80,10 +80,10 @@ main() {
 
     # Prompt: Title (required)
     local title=""
-    printf "Title: "
+    printf "Post title (human-readable, e.g. 'My New Post'): "
     read -r title || true
     if [[ -z "$title" ]]; then
-        printf "Title (cannot be blank): "
+        printf "Post title (cannot be blank): "
         read -r title || true
         if [[ -z "$title" ]]; then
             err "Title cannot be empty."
