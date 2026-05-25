@@ -106,12 +106,13 @@ _add_to_path() {
 }
 
 PATH_ADDED=false
-if [[ -n "${ZSH_VERSION:-}" ]] || [[ "$SHELL" == */zsh ]]; then
+if [[ "$SHELL" == */zsh ]]; then
     _add_to_path "${HOME}/.zshrc"
+    _add_to_path "${HOME}/.zprofile"
     PATH_ADDED=true
-fi
-if [[ -n "${BASH_VERSION:-}" ]] || [[ "$SHELL" == */bash ]]; then
+elif [[ "$SHELL" == */bash ]]; then
     _add_to_path "${HOME}/.bashrc"
+    _add_to_path "${HOME}/.bash_profile"
     PATH_ADDED=true
 fi
 if [[ "$PATH_ADDED" == "false" ]]; then
@@ -119,7 +120,7 @@ if [[ "$PATH_ADDED" == "false" ]]; then
     _add_to_path "${HOME}/.profile"
 fi
 
-# Make it available in this session immediately
+# Make it available in the current session immediately
 export PATH="${BIN_DIR}:${PATH}"
 
 # ---------------------------------------------------------------------------
@@ -164,6 +165,6 @@ printf "  To start writing, open a new terminal and run:\n"
 printf "    ${CYAN}writer my-first-post${RESET}\n"
 printf "\n"
 printf "  Or reload your shell profile now:\n"
-printf "    ${CYAN}source ~/.bashrc${RESET}   (bash)\n"
-printf "    ${CYAN}source ~/.zshrc${RESET}    (zsh)\n"
+printf "    ${CYAN}source ~/.zprofile && source ~/.zshrc${RESET}   (zsh)\n"
+printf "    ${CYAN}source ~/.bash_profile${RESET}                  (bash)\n"
 printf "\n"
