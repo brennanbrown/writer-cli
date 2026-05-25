@@ -7,6 +7,15 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.1.1] - 2026-05-25
+
+### Fixed
+- `writer.sh`: symlink resolution now correctly handles relative `readlink` output (e.g. on macOS/Homebrew), preventing `cd: ../libexec: No such file or directory` when invoked via a Homebrew-managed symlink
+
+[1.1.1]: https://github.com/brennanbrown/writer-cli/compare/v1.1.0...v1.1.1
+
+---
+
 ## [1.1.0] - 2026-05-25
 
 ### Fixed
