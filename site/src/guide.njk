@@ -10,6 +10,22 @@ description: Full guide to using writer, including SSH workflow, editors, drafts
   including the SSH remote workflow.
 </p>
 
+<h2>Installing</h2>
+<p>The fastest way:</p>
+<pre><code class="language-sh">curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh | bash</code></pre>
+<p>Or via Homebrew (macOS / Linux):</p>
+<pre><code class="language-sh">brew tap brennanbrown/writer
+brew install writer</code></pre>
+<p>Or via <a href="https://www.basher.it">Basher</a>:</p>
+<pre><code class="language-sh">basher install brennanbrown/writer-cli</code></pre>
+<p>Or clone and symlink manually:</p>
+<pre><code class="language-sh">git clone https://github.com/brennanbrown/writer-cli
+ln -s "$PWD/writer-cli/writer.sh" ~/.local/bin/writer</code></pre>
+<p>
+  After installing, run <code>writer --setup</code> to configure it.
+  If you skip this step, the wizard starts automatically the first time you run <code>writer</code>.
+</p>
+
 <h2>The slug</h2>
 <p>
   When you run <code>writer my-post</code>, the part after <code>writer</code> is the <strong>slug</strong>.

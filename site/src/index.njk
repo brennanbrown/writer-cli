@@ -41,8 +41,8 @@ description: A CLI tool for static site bloggers who want to open a terminal, wr
   </div>
   <p class="hero-note">
     Installs to <code>~/.local/bin/</code>.<br>
-    Feel free to <a href="https://github.com/brennanbrown/writer-cli/blob/main/INSTALL.sh">read the installer source</a> before running. <br>
-    It's 120 lines of plain bash!
+    Feel free to <a href="https://github.com/brennanbrown/writer-cli/blob/main/INSTALL.sh">read the installer source</a> before running.
+    It's plain bash, no surprises.
   </p>
 </section>
 
@@ -139,10 +139,14 @@ Confirm build and push? [Y/n]:
 
   <h3>1. Install</h3>
   <pre><code class="language-sh">curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh | bash</code></pre>
+  <p>Or via Homebrew (macOS / Linux):</p>
+  <pre><code class="language-sh">brew tap brennanbrown/writer
+brew install writer</code></pre>
+  <p>Or via Basher:</p>
+  <pre><code class="language-sh">basher install brennanbrown/writer-cli</code></pre>
   <p>Or clone and symlink manually:</p>
   <pre><code class="language-sh">git clone https://github.com/brennanbrown/writer-cli
-ln -s "$PWD/writer-cli/writer.sh" ~/.local/bin/writer
-chmod +x ~/.local/bin/writer</code></pre>
+ln -s "$PWD/writer-cli/writer.sh" ~/.local/bin/writer</code></pre>
 
   <h3>2. Run setup</h3>
   <pre><code class="language-sh">writer --setup</code></pre>

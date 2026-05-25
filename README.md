@@ -9,7 +9,7 @@
 ```
 $ writer my-new-post
 
-Title: My New Post
+Post title (human-readable, e.g. 'My New Post'): My New Post
 Tags (comma-separated): life, coffee
 
 → Created: content/posts/my-new-post/index.md
