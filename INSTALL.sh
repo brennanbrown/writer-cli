@@ -158,6 +158,11 @@ printf "\n"
 printf "  Installed to:  ${CYAN}%s${RESET}\n" "$INSTALL_DIR"
 printf "  Command:       ${CYAN}writer${RESET}\n"
 printf "\n"
+printf "  ${YELLOW}Before writer can publish, you'll need:${RESET}\n"
+printf "    • A terminal editor   e.g. ${CYAN}micro${RESET}  → curl https://getmic.ro | bash\n"
+printf "    • A static site generator  e.g. ${CYAN}hugo${RESET}  → https://gohugo.io/installation\n"
+printf "    • A git repo for your site  (run writer from inside it, or set SITE_DIR)\n"
+printf "\n"
 
 # Check if writer config already exists
 if [[ -f "${HOME}/.config/writer/config" ]]; then
