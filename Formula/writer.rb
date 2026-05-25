@@ -11,7 +11,7 @@ class Writer < Formula
   def install
     # Install everything into libexec so writer.sh can find lib/ next to itself
     libexec.install "writer.sh", "lib"
-    (bin/"writer").write_env_script libexec/"writer.sh"
+    bin.install_symlink libexec/"writer.sh" => "writer"
   end
 
   def caveats
