@@ -17,10 +17,12 @@ set -euo pipefail
 # found relative to the actual install location, not the symlink directory.
 _writer_source="${BASH_SOURCE[0]}"
 while [[ -L "$_writer_source" ]]; do
+    _writer_dir="$(cd "$(dirname "$_writer_source")" && pwd)"
     _writer_source="$(readlink "$_writer_source")"
+    [[ "$_writer_source" != /* ]] && _writer_source="${_writer_dir}/${_writer_source}"
 done
 WRITER_DIR="$(cd "$(dirname "$_writer_source")" && pwd)"
-unset _writer_source
+unset _writer_source _writer_dir
 
 # shellcheck source=lib/defaults.sh
 source "${WRITER_DIR}/lib/defaults.sh"
