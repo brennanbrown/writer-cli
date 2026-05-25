@@ -100,11 +100,24 @@ ok "writer → ${INSTALL_DIR}/writer.sh"
 _add_to_path() {
     local profile="$1"
     local export_line='export PATH="$HOME/.local/bin:$PATH"'
-    if [[ -f "$profile" ]] && grep -qF '.local/bin' "$profile" 2>/dev/null; then
+    if grep -qF 'local/bin:$PATH' "$profile" 2>/dev/null; then
         return 0  # already present
     fi
     printf '\n# Added by writer installer\n%s\n' "$export_line" >> "$profile"
     ok "Added PATH entry to ${profile}"
+}
+
+_ensure_bashrc_sourced() {
+    # On Linux, ~/.bash_profile is often missing. If so, create it and have it
+    # source ~/.bashrc so interactive login shells pick up the PATH entry.
+    local bp="${HOME}/.bash_profile"
+    if [[ ! -f "$bp" ]]; then
+        printf '# Created by writer installer\n[[ -f ~/.bashrc ]] && source ~/.bashrc\n' > "$bp"
+        ok "Created ${bp} (sources ~/.bashrc)"
+    elif ! grep -qF '.bashrc' "$bp" 2>/dev/null; then
+        printf '\n# Added by writer installer\n[[ -f ~/.bashrc ]] && source ~/.bashrc\n' >> "$bp"
+        ok "Added .bashrc source to ${bp}"
+    fi
 }
 
 PATH_ADDED=false
@@ -114,7 +127,7 @@ if [[ "$SHELL" == */zsh ]]; then
     PATH_ADDED=true
 elif [[ "$SHELL" == */bash ]]; then
     _add_to_path "${HOME}/.bashrc"
-    _add_to_path "${HOME}/.bash_profile"
+    _ensure_bashrc_sourced
     PATH_ADDED=true
 fi
 if [[ "$PATH_ADDED" == "false" ]]; then
