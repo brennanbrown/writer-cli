@@ -176,13 +176,19 @@ else
 fi
 
 printf "\n"
-printf "  To start writing, open a new terminal and run:\n"
+printf "  To start writing, run:\n"
 printf "    ${CYAN}writer my-first-post${RESET}\n"
 printf "\n"
-printf "  Or reload your shell profile now:\n"
+printf "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
+printf "${YELLOW}  ACTION REQUIRED — run this now:${RESET}\n"
+printf "\n"
 if [[ "$SHELL" == */zsh ]]; then
-    printf "    ${CYAN}source ~/.zprofile && source ~/.zshrc${RESET}\n"
+    printf "    ${CYAN}source ~/.zshrc${RESET}\n"
 else
-    printf "    ${CYAN}source ~/.bash_profile && source ~/.bashrc${RESET}\n"
+    printf "    ${CYAN}source ~/.bashrc${RESET}\n"
 fi
+printf "\n"
+printf "  This adds writer to your PATH in the current terminal.\n"
+printf "  New terminals will have it automatically.\n"
+printf "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${RESET}\n"
 printf "\n"
