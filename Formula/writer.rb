@@ -1,8 +1,8 @@
 class Writer < Formula
   desc "CLI post creation tool for static site generator blogs"
   homepage "https://github.com/brennanbrown/writer-cli"
-  url "https://github.com/brennanbrown/writer-cli/archive/refs/tags/v1.1.0.tar.gz"
-  sha256 "ae6ed4133f640fa5b7b24644b984b21cb3575fc6b3351a0677465edb93915251"
+  url "https://github.com/brennanbrown/writer-cli/archive/refs/tags/v1.1.1.tar.gz"
+  sha256 "b758352dbd37811c6ef6b80689dab3b81f4ee4dc082bde8294541310e6e24bdf"
   license "AGPL-3.0-only"
 
   depends_on "bash"
