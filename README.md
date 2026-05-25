@@ -39,6 +39,13 @@ That's it. The installer will:
 2. Add it to your PATH
 3. Walk you through a short setup so it knows where your blog lives
 
+After the installer finishes, reload your shell profile so the new `~/.local/bin/` PATH entry takes effect:
+
+```sh
+source ~/.bashrc   # bash
+source ~/.zshrc    # zsh
+```
+
 > **NOTE:** Now, of course you shouldn't blindly copy-paste commands from the Internet into your terminal, so only do that if you trust me! You can visit that URL and the repo and read everything that goes into the scripts I've made. Again, there's no building or compiling or dependencies, so WYSIWYG!
 
 ### Other install methods
