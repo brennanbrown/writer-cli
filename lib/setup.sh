@@ -39,6 +39,9 @@ run_onboarding() {
             _parse_config_file "$config_path"
         fi
     fi
+    # Ensure hardcoded defaults fill any still-blank variables (first run or missing keys)
+    if [[ -z "$BUNDLE_FORMAT" ]];      then BUNDLE_FORMAT="true"; fi
+    if [[ -z "$FRONTMATTER_FORMAT" ]]; then FRONTMATTER_FORMAT="yaml"; fi
     printf "Press Enter to accept the shown default for each setting.\n"
 
     # --- SSG ---

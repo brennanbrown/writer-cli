@@ -159,7 +159,7 @@ else
     printf "  Press Enter to start setup, or Ctrl+C to set it up later: "
     read -r _skip || true
     printf "\n"
-    exec bash "${INSTALL_DIR}/writer.sh" --setup
+    bash "${INSTALL_DIR}/writer.sh" --setup
 fi
 
 printf "\n"
