@@ -4,7 +4,6 @@ class Writer < Formula
   url "https://github.com/brennanbrown/writer-cli/archive/refs/tags/v1.1.0.tar.gz"
   sha256 "ae6ed4133f640fa5b7b24644b984b21cb3575fc6b3351a0677465edb93915251"
   license "AGPL-3.0-only"
-  version "1.1.0"
 
   depends_on "bash"
   depends_on "git"
