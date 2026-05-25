@@ -31,15 +31,28 @@ Confirm build and push? [Y/n]:
 ## Install in one line
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh | bash
+eval "$(curl -fsSL https://raw.githubusercontent.com/brennanbrown/writer-cli/main/INSTALL.sh)"
 ```
 
 That's it. The installer will:
 1. Download `writer` and put it in `~/.local/bin/`
-2. Make sure your terminal can find it
+2. Add it to your PATH — **in the current terminal, immediately**, no restart needed
 3. Walk you through a short setup so it knows where your blog lives
 
 > **NOTE:** Now, of course you shouldn't blindly copy-paste commands from the Internet into your terminal, so only do that if you trust me! You can visit that URL and the repo and read everything that goes into the scripts I've made. Again, there's no building or compiling or dependencies, so WYSIWYG!
+
+### Other install methods
+
+**Homebrew** (macOS / Linux):
+```sh
+brew tap brennanbrown/writer
+brew install writer
+```
+
+**Basher**:
+```sh
+basher install brennanbrown/writer-cli
+```
 
 ## First-time setup
 
