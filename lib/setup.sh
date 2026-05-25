@@ -15,6 +15,8 @@ _prompt() {
         printf "  Enter value: "
     fi
     read -r REPLY_VAL || true
+    REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"
+    REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then
         REPLY_VAL="$current"
     fi
@@ -82,10 +84,12 @@ run_onboarding() {
     printf "  Current: ${GREEN}%s${RESET}\n" "$BUNDLE_FORMAT"
     printf "  Enter 'true' or 'false' [Enter to keep]: "
     read -r REPLY_VAL || true
+    REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$BUNDLE_FORMAT"; fi
     while [[ "$REPLY_VAL" != "true" && "$REPLY_VAL" != "false" ]]; do
         printf "  ${RED}Must be 'true' or 'false':${RESET} "
         read -r REPLY_VAL || true
+        REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
         if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$BUNDLE_FORMAT"; fi
     done
     local new_bundle="$REPLY_VAL"
@@ -98,10 +102,12 @@ run_onboarding() {
     printf "  Current: ${GREEN}%s${RESET}\n" "$FRONTMATTER_FORMAT"
     printf "  Enter 'yaml' or 'toml' [Enter to keep]: "
     read -r REPLY_VAL || true
+    REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$FRONTMATTER_FORMAT"; fi
     while [[ "$REPLY_VAL" != "yaml" && "$REPLY_VAL" != "toml" ]]; do
         printf "  ${RED}Must be 'yaml' or 'toml':${RESET} "
         read -r REPLY_VAL || true
+        REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
         if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$FRONTMATTER_FORMAT"; fi
     done
     local new_fm_format="$REPLY_VAL"

@@ -167,6 +167,9 @@ printf "  To start writing, open a new terminal and run:\n"
 printf "    ${CYAN}writer my-first-post${RESET}\n"
 printf "\n"
 printf "  Or reload your shell profile now:\n"
-printf "    ${CYAN}source ~/.zprofile && source ~/.zshrc${RESET}   (zsh)\n"
-printf "    ${CYAN}source ~/.bash_profile${RESET}                  (bash)\n"
+if [[ "$SHELL" == */zsh ]]; then
+    printf "    ${CYAN}source ~/.zprofile && source ~/.zshrc${RESET}\n"
+else
+    printf "    ${CYAN}source ~/.bash_profile && source ~/.bashrc${RESET}\n"
+fi
 printf "\n"
