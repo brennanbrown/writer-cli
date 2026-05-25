@@ -13,9 +13,14 @@
 
 set -euo pipefail
 
-# Resolve the directory this script lives in so lib/ can be found regardless
-# of the working directory the user invokes writer from.
-WRITER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Resolve the real path of this script (follow symlinks) so lib/ is always
+# found relative to the actual install location, not the symlink directory.
+_writer_source="${BASH_SOURCE[0]}"
+while [[ -L "$_writer_source" ]]; do
+    _writer_source="$(readlink "$_writer_source")"
+done
+WRITER_DIR="$(cd "$(dirname "$_writer_source")" && pwd)"
+unset _writer_source
 
 # shellcheck source=lib/defaults.sh
 source "${WRITER_DIR}/lib/defaults.sh"
