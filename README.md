@@ -6,6 +6,8 @@
 
 `writer-cli` is a command-line tool for bloggers who have a static-site generator (SSG) and just want to open a terminal, type a command, write something, and have it published to the Internet.
 
+Visit the [**documentation site**](https://writer.brennanbrown.com) for more information, or read my [write-up blog post](https://brennan.day/introducing-writer-cli-a-bash-tool-i-built-from-scratch-to-blog-in-the-terminal/).
+
 ```
 $ writer my-new-post
 
