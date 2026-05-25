@@ -7,6 +7,21 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ---
 
+## [1.1.2] - 2026-05-25
+
+### Fixed
+- `INSTALL.sh`: PATH setup on fresh Linux — more specific grep prevents Ubuntu's default `~/.bashrc` block from suppressing the PATH export entry
+- `INSTALL.sh`: `~/.bash_profile` is now created (or amended) to source `~/.bashrc` when missing, ensuring login shells pick up the PATH on first install
+- `INSTALL.sh`: reload instruction is now displayed in a prominent yellow-boxed "ACTION REQUIRED" block showing the exact single command needed (`source ~/.bashrc` or `source ~/.zshrc`)
+- `INSTALL.sh`: prerequisites notice added after the success banner so users know a terminal editor, SSG, and git repo are required before `writer` can publish
+
+### Changed
+- `README.md`: install command kept as `curl | bash` (reverted from `eval`) for security; other install methods (Homebrew, Basher) added to README
+
+[1.1.2]: https://github.com/brennanbrown/writer-cli/compare/v1.1.1...v1.1.2
+
+---
+
 ## [1.1.1] - 2026-05-25
 
 ### Fixed

@@ -4,7 +4,7 @@
 #author         :Brennan Kenneth Brown 
 #repo           :https://github.com/brennanbrown/writer-cli
 #date           :20250523
-#version        :1.1.1
+#version        :1.1.2
 #usage          :writer <slug> [options] | writer --setup
 #notes          :Requires bash 3.2+, git, and a terminal editor (default: micro)
 #bash_version   :3.2+
