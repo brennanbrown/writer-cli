@@ -157,9 +157,9 @@ else
     printf "  Let's run the setup wizard so writer knows where your blog lives.\n"
     printf "\n"
     printf "  Press Enter to start setup, or Ctrl+C to set it up later: "
-    read -r _skip || true
+    read -r _skip </dev/tty || true
     printf "\n"
-    bash "${INSTALL_DIR}/writer.sh" --setup
+    bash "${INSTALL_DIR}/writer.sh" --setup </dev/tty
 fi
 
 printf "\n"

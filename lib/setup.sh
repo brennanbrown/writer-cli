@@ -14,7 +14,7 @@ _prompt() {
     else
         printf "  Enter value: "
     fi
-    read -r REPLY_VAL || true
+    read -r REPLY_VAL </dev/tty || true
     REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"
     REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then
@@ -83,12 +83,12 @@ run_onboarding() {
     printf "    false → content/<section>/<slug>.md        (flat file)\n"
     printf "  Current: ${GREEN}%s${RESET}\n" "$BUNDLE_FORMAT"
     printf "  Enter 'true' or 'false' [Enter to keep]: "
-    read -r REPLY_VAL || true
+    read -r REPLY_VAL </dev/tty || true
     REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$BUNDLE_FORMAT"; fi
     while [[ "$REPLY_VAL" != "true" && "$REPLY_VAL" != "false" ]]; do
         printf "  ${RED}Must be 'true' or 'false':${RESET} "
-        read -r REPLY_VAL || true
+        read -r REPLY_VAL </dev/tty || true
         REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
         if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$BUNDLE_FORMAT"; fi
     done
@@ -101,12 +101,12 @@ run_onboarding() {
     printf "    toml → +++ delimiters\n"
     printf "  Current: ${GREEN}%s${RESET}\n" "$FRONTMATTER_FORMAT"
     printf "  Enter 'yaml' or 'toml' [Enter to keep]: "
-    read -r REPLY_VAL || true
+    read -r REPLY_VAL </dev/tty || true
     REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
     if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$FRONTMATTER_FORMAT"; fi
     while [[ "$REPLY_VAL" != "yaml" && "$REPLY_VAL" != "toml" ]]; do
         printf "  ${RED}Must be 'yaml' or 'toml':${RESET} "
-        read -r REPLY_VAL || true
+        read -r REPLY_VAL </dev/tty || true
         REPLY_VAL="${REPLY_VAL#"${REPLY_VAL%%[![:space:]]*}"}"; REPLY_VAL="${REPLY_VAL%"${REPLY_VAL##*[![:space:]]}"}" 
         if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$FRONTMATTER_FORMAT"; fi
     done
@@ -131,7 +131,7 @@ run_onboarding() {
     printf "    or a valid IANA name, e.g. America/Winnipeg, Europe/London, UTC\n"
     printf "  Current: ${GREEN}%s${RESET}\n" "$TIMEZONE"
     printf "  Enter timezone [Enter to keep]: "
-    read -r REPLY_VAL || true
+    read -r REPLY_VAL </dev/tty || true
     if [[ -z "$REPLY_VAL" ]]; then REPLY_VAL="$TIMEZONE"; fi
     local new_timezone="$REPLY_VAL"
 
@@ -144,7 +144,7 @@ run_onboarding() {
     if [[ -z "$site_display" ]]; then site_display="(blank — use current directory)"; fi
     printf "  Current: ${GREEN}%s${RESET}\n" "$site_display"
     printf "  Enter absolute path [Enter to keep]: "
-    read -r REPLY_VAL || true
+    read -r REPLY_VAL </dev/tty || true
     local new_site_dir="$REPLY_VAL"
     # Validate if non-blank
     if [[ -n "$new_site_dir" && ! -d "$new_site_dir" ]]; then
