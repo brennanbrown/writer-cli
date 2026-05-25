@@ -1,14 +1,10 @@
-<div align="center">
-  <img src="site/src/img/favicon-32x32.png" alt="writer-cli logo" width="32" height="32">
-</div>
-
-# writer-cli
+# 🗒️ writer-cli
 
 **Write from your terminal. Publish with one command.**
 
 ![writer-cli screenshot](screenshot.jpg)
 
-`writer` is a command-line tool for bloggers who have a static-site generator (SSG) and just want to open a terminal, type a command, write something, and have it published to the Internet.
+`writer-cli` is a command-line tool for bloggers who have a static-site generator (SSG) and just want to open a terminal, type a command, write something, and have it published to the Internet.
 
 ```
 $ writer my-new-post
@@ -32,10 +28,6 @@ Confirm build and push? [Y/n]:
 ✓ Published: my-new-post
 ```
 
-**License:** AGPL-3.0 · **Author:** [Brennan Kenneth Brown](https://brennan.day) · A [🍓 Berry House](https://berryhouse.ca) Project
-
----
-
 ## Install in one line
 
 ```sh
@@ -47,10 +39,7 @@ That's it. The installer will:
 2. Make sure your terminal can find it
 3. Walk you through a short setup so it knows where your blog lives
 
-> As always with curl-pipe-bash, it's worth a quick look before you run it.  
-> `INSTALL.sh` is short, plain-English, and does nothing surprising.
-
----
+> **NOTE:** Now, of course you shouldn't blindly copy-paste commands from the Internet into your terminal, so only do that if you trust me! You can visit that URL and the repo and read everything that goes into the scripts I've made. Again, there's no building or compiling or dependencies, so WYSIWYG!
 
 ## First-time setup
 
@@ -64,8 +53,6 @@ The wizard asks you questions (each with a sensible default you can accept by pr
 
 If you run `writer` for the first time without running `--setup`, the wizard starts automatically.
 
----
-
 ## What "the slug" means
 
 When you run `writer my-post-title`, the part after `writer` is called the **slug**. It becomes the URL path for your post, so keep it:
@@ -74,7 +61,7 @@ When you run `writer my-post-title`, the part after `writer` is called the **slu
 - **hyphens instead of spaces**: `on-the-road`, not `on the road`
 - **letters, numbers, hyphens only**: no underscores, dots, or special characters
 
-Examples of good slugs:
+Examples of valid slugs:
 
 ```sh
 writer on-the-meaning-of-home
@@ -82,14 +69,12 @@ writer coffee-and-clarity
 writer 2026-reflections
 ```
 
----
-
-## The full workflow, step by step
+## The Full Workflow
 
 ```
 1.  writer my-slug          ← you type this
-2.  Title: ___              ← you type your post title (required)
-3.  Tags: ___               ← comma-separated tags, or just press Enter to skip
+2.  Title: ______           ← you type your post title (required)
+3.  Tags: _______           ← comma-separated tags, or just press Enter to skip
 4.  [micro opens]           ← your editor opens; write your post, then save and close
 5.  Summary / description:  ← optional one-line description, or press Enter to skip
 6.  Confirm build? [Y/n]:   ← press Enter (or Y) to publish, N to save without publishing
@@ -97,8 +82,6 @@ writer 2026-reflections
 ```
 
 At step 6, if you press **N**, your post file is saved but nothing is built or pushed. You can come back and publish later.
-
----
 
 ## Saving a draft
 
@@ -108,8 +91,6 @@ writer my-post --draft
 
 This sets `draft: true` in your post's frontmatter, so Hugo won't include it in the public build. Useful for work-in-progress posts.
 
----
-
 ## Writing without publishing immediately
 
 ```sh
@@ -117,11 +98,9 @@ writer my-post --no-push    # build the site, but don't git push
 writer my-post --no-build   # skip the build entirely, just commit and push the file
 ```
 
----
-
 ## Using `writer` over SSH
 
-One of the nicest ways to use `writer` is on a remote server: you SSH in, write, disconnect, and the post is live. No local Hugo install needed.
+A great way to use `writer` is on a remote server: you SSH in, write, disconnect, and the post is live. No local installs needed.
 
 ```sh
 ssh you@yourserver.com
@@ -148,8 +127,6 @@ writer my-post
 
 If you get disconnected, `tmux attach` on reconnect puts you back where you were.
 
----
-
 ## Re-running setup / changing settings
 
 ```sh
@@ -158,15 +135,11 @@ writer --setup
 
 Every setting is shown with its current value. Press Enter to keep it, or type a new value. Your config is saved when you finish.
 
----
-
 ## Supported editors
 
 The default editor is [`micro`](https://micro-editor.github.io), a small terminal editor that works like a GUI text editor (Ctrl+S to save, Ctrl+Q to quit, no modes). It is recommended for new users.
 
 You can change the editor in `--setup` or by setting `EDITOR=` in `~/.config/writer/config`. Any terminal editor works: `nano`, `vim`, `nvim`, `hx`, etc.
-
----
 
 ## Project-local settings (`.writerrc`)
 
@@ -177,8 +150,6 @@ If you have multiple blogs or want different settings per project, create a `.wr
 DEFAULT_SECTION=notes
 FRONTMATTER_FORMAT=toml
 ```
-
----
 
 ## All flags
 
@@ -193,8 +164,6 @@ FRONTMATTER_FORMAT=toml
 | `--ssg <name>` | Overrides the SSG for this run (`hugo`, `eleventy`, `jekyll`) |
 | `--setup` | Runs the setup wizard |
 | `-h`, `--help` | Shows help |
-
----
 
 ## All config keys
 
@@ -213,8 +182,6 @@ These live in `~/.config/writer/config` (set via `writer --setup`):
 | `TIMEZONE` | `auto` | `auto` uses system timezone, or set an IANA name like `America/Winnipeg` |
 | `SITE_DIR` | *(blank)* | Absolute path to your site root, useful when running writer from elsewhere |
 
----
-
 ## Dependencies
 
 Everything `writer` needs must be installed on the machine where it runs (your computer or your server):
@@ -228,8 +195,6 @@ Everything `writer` needs must be installed on the machine where it runs (your c
 
 `writer` itself has no other dependencies, it is plain shell script.
 
----
-
 ## Exit codes
 
 | Code | Meaning |
@@ -241,8 +206,6 @@ Everything `writer` needs must be installed on the machine where it runs (your c
 | `4` | Git step failed |
 | `5` | Config file has an unknown or invalid setting |
 
----
-
 ## About & Support
 
 Hi, I'm Brennan! I'm a Queer Métis author and FOSS web developer based in Mohkínstsis, Treaty 7 territory. I'm the founder of [🍓 Berry House](https://berryhouse.ca). I write personal essays, cultural criticism, and about why the Internet is worth fighting for. IndieWeb forever!
@@ -250,8 +213,6 @@ Hi, I'm Brennan! I'm a Queer Métis author and FOSS web developer based in Mohk�
 I built `writer-cli` inspired by the [TTBP (tilde.town feels engine)](https://github.com/modgethanc/ttbp), a blogging tool from the tildeverse that makes writing and publishing feel effortless. I wanted something like that for my own static site. If it's useful to you too, I'd love it if you considered supporting my work:
 
 👉 **[brennan.day/support](https://brennan.day/support)**
-
----
 
 ## Project layout
 
@@ -274,3 +235,6 @@ INSTALL.sh            ← one-command installer
 CHANGELOG.md          ← version history
 CONTRIBUTING.md       ← dev setup, style rules, PR guidelines
 ```
+---
+
+**License:** AGPL-3.0 · **Author:** [Brennan Kenneth Brown](https://brennan.day) · A [🍓 Berry House](https://berryhouse.ca) Project
